@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Game Stats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2 class="logo">Stats</h2>
+
+            <nav class="tabs">
+                <a href="/" class="{% if active_tab == 'home' %}active{% endif %}"><strong>
+                    Inicio
+                </a></strong>
+                <a href="/leaderboard" class="{% if active_tab == 'leaderboard' %}active{% endif %}"><strong>
+                    Leaderboard
+                </a></a></strong>
+                <a href="/perfil" class="{% if active_tab == 'perfil' %}active{% endif %}"><strong>
+                    Perfil
+                </a></a></strong>
+                </h3>
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+    </div>
+
+</body>
+
+</html>

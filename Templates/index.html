@@ -1,0 +1,63 @@
+{% extends "tab.html" %}
+
+{% block content %}
+
+<!-- Bienvenida -->
+<h1>Bienvenido, {{ user.username }}</h1>
+<h2><strong>Nivel {{ user.perfil.nivel }} · Rango {{ user.perfil.rango }}</strong></h2>
+
+<!-- Resumen de stats -->
+<div class="card">
+    <h2>Resumen</h2>
+    <div class="stats">
+        <div class="stat">
+            <strong>Kills</strong><br>
+            {{ user.estadisticas.combate.kills }}
+        </div>
+        <div class="stat">
+            <strong>Deaths</strong><br>
+            {{ user.estadisticas.combate.deaths }}
+        </div>
+        <div class="stat">
+            <strong>K/D</strong><br>
+            {{ kd }}
+        </div>
+        <div class="stat">
+            <strong>Victorias</strong><br>
+            {{ user.estadisticas.generales.victorias }}
+        </div>
+        <div class="stat">
+            <strong>Headshots %</strong><br>
+            {{ headshot_pct }}%
+        </div>
+    </div>
+</div>
+
+<!-- Leaderboard -->
+<div class="card">
+    <h2>🏆 Leaderboard</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th>Rango</th>
+                <th>Kills</th>
+                <th>K/D</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in leaderboard %}
+            <tr class="{% if p.username == current_user %}highlight{% endif %}">
+                <td>{{ loop.index }}</td>
+                <td>{{ p.username }}</td>
+                <td>{{ p.perfil.rango }}</td>
+                <td>{{ p.estadisticas.combate.kills }}</td>
+                <td>{{ (p.estadisticas.combate.kills / (p.estadisticas.combate.deaths or 1)) | round(2) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
