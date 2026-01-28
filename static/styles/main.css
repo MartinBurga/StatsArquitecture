@@ -117,4 +117,25 @@ body {
   padding: 32px;
 }
 
+.hidden {
+  display: none;
+}
+
+.loading {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #0ea5e9;
+  color: #020617;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+.error {
+  padding: 12px;
+  color: #ef4444;
+  font-weight: bold;
+}
 

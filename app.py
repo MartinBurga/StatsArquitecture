@@ -1,89 +1,29 @@
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
+from flask import Flask
 import config
+from extensions import mongo
 
-app = Flask(__name__)
-app.config["MONGO_URI"] = config.MONGO_URI
-mongo = PyMongo(app)
+def create_app():
+    app = Flask(__name__)
+    app.config["MONGO_URI"] = config.MONGO_URI
 
-@app.route("/")
-def index():
-    players_col = mongo.db.Player
+    mongo.init_app(app)
 
-    user = players_col.find_one(
-        {"username": "Niyumme"},
-        {"_id": 0}
-    )
+    # HTML routes
+    from api.controllers.homeRoutes import home_bp
+    from api.controllers.leaderboardRoutes import leaderboard_bp
+    from api.controllers.profileRoutes import profile_bp
 
-    if not user:
-        return "Usuario no encontrado", 404
+    # API routes
+    from api.controllers.apiPlayerRoutes import api_player_bp
 
-    leaderboard_data = list(
-        players_col.find(
-            {},
-            {
-                "_id": 0,
-                "username": 1,
-                "perfil.rango": 1,
-                "estadisticas.combate.kills": 1,
-                "estadisticas.combate.deaths": 1
-            }
-        ).sort("estadisticas.combate.kills", -1)
-    )
+    app.register_blueprint(home_bp)
+    app.register_blueprint(leaderboard_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(api_player_bp)
 
-    kills = user["estadisticas"]["combate"]["kills"]
-    deaths = user["estadisticas"]["combate"]["deaths"]
-    impactos = user["estadisticas"]["precision"]["impactos"]
-    headshots = user["estadisticas"]["precision"]["headshots"]
+    return app
 
-    kd = round(kills / max(deaths, 1), 2)
-    headshot_pct = round((headshots / max(impactos, 1)) * 100, 2)
-
-    return render_template(
-        "index.html",
-        user=user,
-        leaderboard=leaderboard_data,
-        kd=kd,
-        headshot_pct=headshot_pct,
-        current_user=user["username"],
-        active_tab="home"
-    )
-
-@app.route("/leaderboard")
-def leaderboard():
-    players_col = mongo.db.Player
-
-    players = list(
-        players_col.find(
-            {},
-            {"_id": 0}
-        ).sort("estadisticas.combate.kills", -1)
-    )
-
-    return render_template(
-        "leaderboard.html",
-        players=players,
-        current_user="Niyumme",
-        active_tab="leaderboard"
-    )
-
-@app.route("/perfil")
-def perfil():
-    players_col = mongo.db.Player
-
-    user = players_col.find_one(
-        {"username": "Niyumme"},
-        {"_id": 0}
-    )
-
-    if not user:
-        return "Usuario no encontrado", 404
-
-    return render_template(
-        "profile.html",
-        user=user,
-        active_tab="profile"
-    )
+app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)

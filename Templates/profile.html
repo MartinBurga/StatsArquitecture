@@ -1,6 +1,20 @@
 {% extends "tab.html" %}
 
 {% block content %}
-<h2>Perfil</h2>
+<h1>👤 Perfil de {{ user.username }}</h1>
+
+<div class="card">
+  <p><strong>Nivel:</strong> {{ user.perfil.nivel }}</p>
+  <p><strong>Rango:</strong> {{ user.perfil.rango }}</p>
+  <p><strong>Experiencia:</strong> {{ user.perfil.experiencia }}</p>
+</div>
+
+<div class="card">
+  <h2>Estadísticas</h2>
+  <p>Kills: {{ user.estadisticas.combate.kills }}</p>
+  <p>Deaths: {{ user.estadisticas.combate.deaths }}</p>
+  <p>Assists: {{ user.estadisticas.combate.assists }}</p>
+</div>
+<script type="module" src="{{ url_for('static', filename='js/profile.js') }}"></script>
 
 {% endblock %}

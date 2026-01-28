@@ -51,13 +51,14 @@
             <tr class="{% if p.username == current_user %}highlight{% endif %}">
                 <td>{{ loop.index }}</td>
                 <td>{{ p.username }}</td>
-                <td>{{ p.perfil.rango }}</td>
-                <td>{{ p.estadisticas.combate.kills }}</td>
-                <td>{{ (p.estadisticas.combate.kills / (p.estadisticas.combate.deaths or 1)) | round(2) }}</td>
+                <td>{{ p.rango }}</td>
+                <td>{{ p.kills }}</td>
+                <td>{{ p.kd }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+<script type="module" src="{{ url_for('static', filename='js/home.js') }}"></script>
 
 {% endblock %}
