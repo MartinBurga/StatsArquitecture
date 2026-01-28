@@ -1,0 +1,49 @@
+{
+  "C:\\ProyectosUDLA\\Arquitectura\\lambda\\serverless.yml": {
+    "versionFramework": "4.31.2",
+    "servicePath": "C:\\ProyectosUDLA\\Arquitectura\\lambda\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "shooter-lambda",
+      "frameworkVersion": ">=4.0.0",
+      "provider": {
+        "name": "aws",
+        "runtime": "python3.11"
+      },
+      "functions": {
+        "leaderboard": {
+          "handler": "lambda_stats.leaderboard_handler",
+          "events": [
+            {
+              "http": {
+                "path": "leaderboard",
+                "method": "get"
+              }
+            }
+          ]
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ]
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "python3.11"
+    },
+    "error": {
+      "message": "Sorry, our authentication service is currently experiencing issues. Please try again in a few moments. We've been alerted of the issue.",
+      "stack": "Error: Sorry, our authentication service is currently experiencing issues. Please try again in a few moments. We've been alerted of the issue.\n    at Authentication.authenticateInteractive (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:921:14351)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async Authentication.getAuthenticatedData (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:919:11702)\n    at async Authentication.authenticate (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:922:4140)\n    at async TraditionalRunner.resolveVariablesAndAuthenticate (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:930:2394)\n    at async TraditionalRunner.run (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:1953:27828)\n    at async route (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:2167:2848)\n    at async Object.run (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:2168:3893)\n    at async run2 (file:///C:/Users/Marti/.serverless/releases/4.31.2/package/dist/sf-core.js:2168:5047)"
+    },
+    "serviceRawFile": "service: shooter-lambda\r\nframeworkVersion: '>=4.0.0'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: python3.11\r\n\r\nfunctions:\r\n  leaderboard:\r\n    handler: lambda_stats.leaderboard_handler\r\n    events:\r\n      - http:\r\n          path: leaderboard\r\n          method: get\r\n\r\nplugins:\r\n  - serverless-offline\r\n",
+    "command": [
+      "offline"
+    ],
+    "options": {},
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

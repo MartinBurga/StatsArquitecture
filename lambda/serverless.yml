@@ -1,0 +1,21 @@
+service: shooter-lambda
+frameworkVersion: '>=4.0.0'
+
+provider:
+  name: aws
+  runtime: python3.11
+
+functions:
+  leaderboard:
+    handler: lambda_stats.leaderboard_handler
+    events:
+      - http:
+          path: leaderboard
+          method: get
+      - http:
+          path: /
+          method: get
+
+
+plugins:
+  - serverless-offline
