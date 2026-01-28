@@ -1,0 +1,25 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+COPY lambda_stats.py .
+
+
+EXPOSE 5001
+
+
+ENV MONGO_URI="mongodb+srv://ADMIN:UDLA@cluster0.0s8cq40.mongodb.net/ArquitecturaDB"
+
+CMD ["python", "lambda_stats.py"]
